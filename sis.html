@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Birthday Surprise ❤️</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 125vh;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            color: white;
+            background: linear-gradient(135deg, #12002f, #4b0082, #ff1493);
+            overflow-x: hidden;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+
+        /* Opening screen */
+        #opening {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: linear-gradient(135deg, #12002f, #8a2be2);
+            z-index: 10;
+        }
+
+        #opening h1 {
+            font-size: 38px;
+            animation: glow 1.5s infinite alternate;
+        }
+
+        #opening button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 30px;
+            background: #ff1493;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 0 20px #ff69b4;
+        }
+
+        #songFile {
+            margin: 12px 0;
+            max-width: 90%;
+        }
+
+        #selectedSongName {
+            margin: 0 12px 12px;
+            font-size: 14px;
+        }
+
+        #birthdaySong {
+            width: min(90%, 360px);
+            margin: 10px auto 10px;
+        }
+
+        .song-controls button {
+            margin: 4px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            background: #ff1493;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .song-controls button:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        /* Main card */
+        .card {
+            position: relative;
+            margin: 20px auto;
+            padding: 40px 24px;
+            min-height: 850px;
+            width: 92%;
+            max-width: 650px;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            box-shadow: 0 0 30px rgba(255,255,255,0.3);
+        }
+
+        h1 {
+            font-size: 38px;
+            color: #ffd700;
+            animation: glow 1.5s infinite alternate;
+        }
+
+        h2 {
+            color: #ffb6c1;
+        }
+
+        .photo {
+            width: 220px;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 6px solid #ffd700;
+            box-shadow: 0 0 30px #ff69b4;
+            animation: photoGlow 2s infinite alternate;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        /* Hearts */
+        .heart {
+            position: fixed;
+            bottom: -50px;
+            font-size: 30px;
+            animation: float 6s linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #ff69b4;
+            }
+
+            to {
+                text-shadow: 0 0 30px #ffd700;
+            }
+        }
+
+        @keyframes photoGlow {
+            from {
+                box-shadow: 0 0 10px #ff69b4;
+            }
+
+            to {
+                box-shadow: 0 0 40px #ffd700;
+            }
+        }
+
+        /* Fireworks */
+        .firework {
+            position: fixed;
+            font-size: 35px;
+            animation: boom 2s infinite;
+        }
+
+        @keyframes boom {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(1.5);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+
+        .f1 {
+            top: 10%;
+            left: 10%;
+        }
+
+        .f2 {
+            top: 15%;
+            right: 10%;
+            animation-delay: 0.7s;
+        }
+
+        .f3 {
+            bottom: 10%;
+            left: 15%;
+            animation-delay: 1.2s;
+        }
+
+        .f4 {
+            bottom: 15%;
+            right: 15%;
+            animation-delay: 1.7s;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Opening screen -->
+    <div id="opening">
+
+        <h1>🎁 A Birthday Surprise for you🎁</h1>
+
+        <p>Something special is waiting for you ❤️</p>
+
+        <label for="songFile">Choose a birthday song:</label>
+        <input type="file" id="songFile" accept="audio/*">
+        <p id="selectedSongName" aria-live="polite">No song selected</p>
+
+        <button onclick="openBirthday()">
+            💝 Click to Open 💝
+        </button>
+
+    </div>
+
+
+    <!-- Main birthday card -->
+    <div class="card">
+
+        <h1>🎂 HAPPY BIRTHDAY ✨ U.S.H.A — A.K.K.A ✨ 🎂</h1>
+
+        <!-- Replace reshma.jpg with your sister's photo -->
+        <img src="akka.jpeg" class="photo" alt="My Sister">
+
+        <audio id="birthdaySong" controls></audio>
+        <div class="song-controls">
+            <button id="startSong" type="button" disabled>▶ Start Song</button>
+            <button id="stopSong" type="button" disabled>■ Stop Song</button>
+        </div>
+
+        <h2>❤️ Happy Birthday My Dear AKKA ❤️</h2>
+
+        <p>
+            May your special day be filled with
+            happiness, laughter and beautiful memories. 🎉
+            <br>
+
+            May all your dreams come true
+            and may you always keep smiling. 😊
+            <br>
+            You are very special to me. ❤️
+            <br>
+
+            🎂 Happy Birthday once again! 🎂
+        </p>
+    </div>
+
+
+
+
+
+
+    <!-- Floating hearts -->
+    <div class="heart" style="left:5%; animation-delay:0s;">❤️</div>
+    <div class="heart" style="left:20%; animation-delay:2s;">💖</div>
+    <div class="heart" style="left:40%; animation-delay:1s;">💕</div>
+    <div class="heart" style="left:60%; animation-delay:3s;">💗</div>
+    <div class="heart" style="left:80%; animation-delay:1.5s;">💝</div>
+    <div class="heart" style="left:95%; animation-delay:4s;">❤️</div>
+
+
+    <!-- Fireworks -->
+    <div class="firework f1">🎆</div>
+    <div class="firework f2">🎇</div>
+    <div class="firework f3">🎆</div>
+    <div class="firework f4">🎇</div>
+
+
+    <script>
+        const song = document.getElementById("birthdaySong");
+        const songFile = document.getElementById("songFile");
+        const startSong = document.getElementById("startSong");
+        const stopSong = document.getElementById("stopSong");
+
+        songFile.addEventListener("change", function () {
+            const file = songFile.files[0];
+            if (file) {
+                song.src = URL.createObjectURL(file);
+                document.getElementById("selectedSongName").textContent = `Selected: ${file.name}`;
+                startSong.disabled = false;
+                stopSong.disabled = false;
+            } else {
+                song.removeAttribute("src");
+                song.load();
+                document.getElementById("selectedSongName").textContent = "No song selected";
+                startSong.disabled = true;
+                stopSong.disabled = true;
+            }
+        });
+
+        startSong.addEventListener("click", function () {
+            song.play().catch(() => {
+                // Playback can also be started with the audio player's controls.
+            });
+        });
+
+        stopSong.addEventListener("click", function () {
+            song.pause();
+            song.currentTime = 0;
+        });
+
+        function openBirthday() {
+            document.getElementById("opening").style.display = "none";
+
+            if (songFile.files.length > 0) {
+                song.play().catch(() => {
+                    // The player controls remain available if playback is blocked.
+                });
+            }
+        }
+    </script>
+
+</body>
+</html>
